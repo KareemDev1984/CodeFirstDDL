@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeFirstDDL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,23 +9,52 @@ namespace CodeFirstDDL.Controllers
 {
     public class HomeController : Controller
     {
+        StudentContext db = new StudentContext();
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Create()
         {
-            ViewBag.Message = "Your application description page.";
-
+            var states = db.States.ToList();
+            List<SelectListItem> selectList = new List<SelectListItem>();
+            foreach (var item in states)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Text = item.StateName,
+                    Value = item.StateID.ToString()
+                });
+            }
+            ViewBag.StateId = selectList;
             return View();
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Create(Student student)
         {
-            ViewBag.Message = "Your contact page.";
+            //var states = db.States.ToList();
+            //List<SelectListItem> selectList = new List<SelectListItem>();
+            //foreach (var item in states)
+            //{
+            //    selectList.Add(new SelectListItem
+            //    {
+            //        Text = item.StateName,
+            //        Value = item.StateID.ToString()
+            //    });
+            //}
+            //ViewBag.StateId = selectList;
+            if (ModelState.IsValid)
+            {
+                db.Students.Add(student);
+                db.SaveChanges();
+            }
 
-            return View();
+
+
+            return RedirectToAction("Create");
         }
+
     }
 }

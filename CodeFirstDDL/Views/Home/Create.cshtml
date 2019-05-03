@@ -1,0 +1,35 @@
+﻿@model CodeFirstDDL.Models.Student
+@using CodeFirstDDL.Models
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@Html.ValidationSummary("The following errors were found bro...:", new { @class = "alert alert-danger" })
+
+@using (Html.BeginForm())
+{
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.StudentName, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.StateId, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.StateId, (IEnumerable<SelectListItem>)ViewBag.StateId, "Select...", new { @class = "form-control" })
+        @*@Html.ValidationMessageFor(m => m.ActivityId)*@
+
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success btn-lg margin-right ">
+            <span class="glyphicon glyphicon-save"></span> Save
+        </button>
+    </div>
+
+
+
+
+}
